@@ -1,0 +1,94 @@
+.App{
+	width: 100vw;
+	height: calc(100vh - 100px);
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content:space-around;
+	color: #575757;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-weight: 600;
+	img{
+		filter: grayscale(1) brightness(0.4) opacity(0.6);
+	}
+	}
+	.res{
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-size: 30px;
+		color: #575757bb;
+		gap: 30px;
+		img{
+			height: 60px;
+		}
+	}
+	.Game{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		p{
+			margin-top: 100px;
+			opacity: 0.9;
+			font-size: 20px;
+			cursor: pointer;
+			transition-duration: 0.2s;
+			padding: 10px 40px;
+			border-radius: 50px;
+			border: 1px solid #575757;
+			&:hover{
+				opacity: 0.6;
+			}
+		}
+		.turn{
+			padding: 10px 40px;
+			border-radius: 50px;
+			border: 1px solid #575757;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 50px;
+			img{
+				height: 25px;
+				filter: grayscale(1) brightness(0.4) opacity(0.9);
+			}
+		}
+}
+
+.ticTacToe{
+	width: 415px;
+	height: 415px;
+	// border: 6px solid #0d1821;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 18px;
+	&_card{
+		width: calc( 33.333% - 18px);
+		height: calc( 33.333% - 18px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 19px;
+		background: #c4c4c4;
+		box-shadow:  17px 17px 35px #a7a7a7,
+             -17px -17px 35px #e1e1e1;
+		&_active{
+			width: calc( 33.333% - 18px);
+			height: calc( 33.333% - 18px);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 19px;
+			background: #c4c4c4;
+			box-shadow: inset 17px 17px 35px #a7a7a7,
+            inset -17px -17px 35px #e1e1e1;
+			img{
+				height: 68%;
+				width: 68%;
+				filter: grayscale(1) brightness(0.7) opacity(0.8);
+			}
+		}
+		// border: 1px solid #0d182133;
+	}
+}
