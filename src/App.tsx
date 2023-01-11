@@ -3,58 +3,64 @@ import s from './App.module.scss'
 import x from './images/X.png'
 import o from './images/O.png'
 
-function App() {
-  const [state, setState]:any = useState(['','','','','','','','',''])
-  const [turn, setTurn] = useState(true)
-  const [res, setRes] = useState('')
-  const [countX, setCountX] = useState(0)
-  const [countO, setCountO] = useState(0)
+import useStore from './store'
 
-  const changeCardState = (e:any, index:number) => {
-    let newState:any = state.map((e:any,i:number) => {
-      return i === index ? turn : e
-    })
-    setTurn(!turn)
-    setState(newState)
+
+
+function App() {
+  
+  const ground = useStore(state => state.ground) // Поле
+  const turn = useStore(state => state.turn) // Чья очередь
+  const result = useStore(state => state.result) // Результат
+  const changeGroundItem = useStore(state => state.changeGroundItem) // Смена блока
+  const addCount = useStore( state => state.addCount) // Смена результатов
+  const restart = useStore(state => state.restart) // Очистка поля
+  const [res, setRes] = useState('') // Ограничение ходов после победы
+
+
+  const restartGround = () => {
+    restart()
+    setRes('')
   }
 
   const changeRes = (data:boolean) => {
-    data ? setCountX(countX+1) : setCountO(countO+1)  
+    data ? addCount(0): addCount(1)
      data ? setRes('x') : setRes('o')  
   }
 
-  const restart = () => {setState(['','','','','','','','','']), setRes('')}
+
+  // Выйгрышные ситуации
+
 
   useEffect(() => {
-    console.log(state)
-    state[0] !== '' ? 
-    state[0] === state[1] && state[0] === state[2] ? changeRes(state[0]) :
-    state[0] === state[3] && state[0] === state[6] ? changeRes(state[0]) :
-    state[0] === state[4] && state[0] === state[8] ? changeRes(state[0]) : null : null
+    ground[0] !== '' ? 
+    ground[0] === ground[1] && ground[0] === ground[2] ? changeRes(ground[0]) :
+    ground[0] === ground[3] && ground[0] === ground[6] ? changeRes(ground[0]) :
+    ground[0] === ground[4] && ground[0] === ground[8] ? changeRes(ground[0]) : null : null
 
-    state[1] !== '' ? 
-    state[1] === state[4] && state[1] === state[7] ? changeRes(state[1]) :
+    ground[1] !== '' ? 
+    ground[1] === ground[4] && ground[1] === ground[7] ? changeRes(ground[1]) :
     null : null
 
-    state[3] !== '' ? 
-    state[3] === state[4] && state[3] === state[5] ? changeRes(state[3]) :
+    ground[3] !== '' ? 
+    ground[3] === ground[4] && ground[3] === ground[5] ? changeRes(ground[3]) :
     null : null
 
-    state[8] !== '' ? 
-    state[8] === state[7] && state[8] === state[6] ? changeRes(state[8]) :
+    ground[8] !== '' ? 
+    ground[8] === ground[7] && ground[8] === ground[6] ? changeRes(ground[8]) :
     null : null
 
-    state[2] !== '' ? 
-    state[2] === state[4] && state[2] === state[6] ? changeRes(state[2]) :
-    state[2] === state[5] && state[2] === state[8] ? changeRes(state[2]) : null : null
+    ground[2] !== '' ? 
+    ground[2] === ground[4] && ground[2] === ground[6] ? changeRes(ground[2]) :
+    ground[2] === ground[5] && ground[2] === ground[8] ? changeRes(ground[2]) : null : null
 
-  }, [state])
+  }, [ground])
 
   return (
     <div className={s.App}>
       <div className={s.res}>
         <img src={x} alt="" />
-        <h3>{countX}</h3>
+        <h3>{result[0]}</h3>
       </div>
       <div className={s.Game}>
         <div className={s.turn}>
@@ -62,18 +68,18 @@ function App() {
           <h3>turn</h3>
         </div>
         <div className={s.ticTacToe}>
-          {state.map((e:any, index:number) => (
-            <div className={e === '' ? s.ticTacToe_card : s.ticTacToe_card_active} onClick={() => {e === '' && res === '' ? changeCardState(e, index) : null}}>
+          {ground.map((e:any, index:number) => (
+            <div key={index} className={e === '' ? s.ticTacToe_card : s.ticTacToe_card_active} onClick={() => {e === '' && res === '' ? changeGroundItem(e, index, turn) : null}}>
               <img src={e !== '' ? e ? x : o : ''}/>
             </div>
           ))}
         </div>
-        <p onClick={() => restart()}>restart</p>
+        <p onClick={() => restartGround()}>restart</p>
         
       </div>
       <div className={s.res}>
         <img src={o} alt="" />
-        <h3>{countO}</h3>
+        <h3>{result[1]}</h3>
       </div>
     </div>
   )
