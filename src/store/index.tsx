@@ -8,7 +8,6 @@ interface MyState {
   changeGroundItem: any,
   restart: any,
   addCount: any,
-  pushResult: any,
 }
 
 
@@ -25,7 +24,6 @@ const useStore = create<MyState>((set) => ({
     })),
     restart: () => set((state:any) => ({ground: ['','','','','','','','',''], turn: state.turn, result: state.result})),
     addCount: (i:number) => set(state => ({ground: state.ground, turn: state.turn, result: state.result.map((el:any,index:number) => index === i ? el+=1 : el)})),
-    pushResult: (data:any) => set(state => ({ground: state.ground, turn: state.turn, result: data}))
   }))
 
   export default useStore

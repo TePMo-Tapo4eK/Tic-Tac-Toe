@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react'
 import s from './App.module.scss'
 import x from './images/X.png'
 import o from './images/O.png'
-
 import useStore from './store'
-
-
+import WinModal from './components/winModal/winModal'
 
 function App() {
   
@@ -17,7 +15,6 @@ function App() {
   const restart = useStore(state => state.restart) // Очистка поля
   const [res, setRes] = useState('') // Ограничение ходов после победы
 
-
   const restartGround = () => {
     restart()
     setRes('')
@@ -28,10 +25,7 @@ function App() {
      data ? setRes('x') : setRes('o')  
   }
 
-
   // Выйгрышные ситуации
-
-
   useEffect(() => {
     ground[0] !== '' ? 
     ground[0] === ground[1] && ground[0] === ground[2] ? changeRes(ground[0]) :
@@ -54,9 +48,14 @@ function App() {
     ground[2] === ground[4] && ground[2] === ground[6] ? changeRes(ground[2]) :
     ground[2] === ground[5] && ground[2] === ground[8] ? changeRes(ground[2]) : null : null
 
+    let i = 0 
+    ground.map((e:any) => e === '' ? i+=1 : null)
+    i === 0 ? restartGround() : null
+
   }, [ground])
 
   return (
+    <>
     <div className={s.App}>
       <div className={s.res}>
         <img src={x} alt="" />
@@ -74,14 +73,15 @@ function App() {
             </div>
           ))}
         </div>
-        <p onClick={() => restartGround()}>restart</p>
-        
+        <p onClick={() => restartGround()}>clear the field</p>
       </div>
       <div className={s.res}>
         <img src={o} alt="" />
         <h3>{result[1]}</h3>
       </div>
     </div>
+    <WinModal winner={res} restart={restartGround}/>
+    </>
   )
 }
 
