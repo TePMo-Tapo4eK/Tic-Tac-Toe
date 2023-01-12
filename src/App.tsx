@@ -62,9 +62,19 @@ function App() {
         <h3>{result[0]}</h3>
       </div>
       <div className={s.Game}>
+        <div className={s.Header}>
+        <div className={s.resMobile}>
+          <img src={x} alt="" />
+          <h3>{result[0]}</h3>
+        </div>
         <div className={s.turn}>
           <img src={turn ? x : o} />
           <h3>turn</h3>
+        </div>
+        <div className={s.resMobile}>
+        <img src={o} alt="" />
+        <h3>{result[1]}</h3>
+        </div>
         </div>
         <div className={s.ticTacToe}>
           {ground.map((e:any, index:number) => (
