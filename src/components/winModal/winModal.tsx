@@ -3,7 +3,7 @@ import s from './winModal.module.scss'
 import x from '../../images/X.png'
 import o from '../../images/O.png'
 
-const WinModal = ({winner, restart}:any) => {
+const WinModal = ({winner, restart} : {winner: string, restart: () => void} ) => {
     return(
         <div className={s.screenModal} style={{display: winner !== '' ? 'flex' : 'none'}}>
             <div className={s.screenModal_info}>

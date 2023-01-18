@@ -13,14 +13,15 @@ function App() {
   const changeGroundItem = useStore(state => state.changeGroundItem) // Смена блока
   const addCount = useStore( state => state.addCount) // Смена результатов
   const restart = useStore(state => state.restart) // Очистка поля
-  const [res, setRes] = useState('') // Ограничение ходов после победы
+
+  const [res, setRes] = useState<string>('') // Ограничение ходов после победы
 
   const restartGround = () => {
     restart()
     setRes('')
   }
 
-  const changeRes = (data:boolean) => {
+  const changeRes = (data:(boolean|string)) => {
     data ? addCount(0): addCount(1)
      data ? setRes('x') : setRes('o')  
   }
@@ -78,7 +79,7 @@ function App() {
         </div>
         <div className={s.ticTacToe}>
           {ground.map((e:any, index:number) => (
-            <div key={index} className={e === '' ? s.ticTacToe_card : s.ticTacToe_card_active} onClick={() => {e === '' && res === '' ? changeGroundItem(e, index, turn) : null}}>
+            <div key={index} className={e === '' ? s.ticTacToe_card : s.ticTacToe_card_active} onClick={() => {e === '' && res === '' ? changeGroundItem(index, turn) : null}}>
               <img src={e !== '' ? e ? x : o : ''}/>
             </div>
           ))}
